@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Records</title>
+</head>
+
+<body>
+    <div>
+        <nav>
+            <a class="logout" href="{{ url_for('logout') }}">Logout</a>
+        </nav>
+    </div>
+
+    <h1 class="sug_records">SUG RECORDS</h1>
+    <div>
+        {% with messages = get_flashed_messages() %} {% if messages %} {% for message in messages %}
+        <div id="alert" class="alert-danger">{{ message }}</div>
+        {% endfor %} {% endif %} {% endwith %}
+
+        <script type="text/javascript">
+            // Function to hide the alert message after a specified duration
+            function hideAlert() {
+                setTimeout(function() {
+                    document.getElementById("alert").style.display = "none";
+                }, 5000); // Set the duration (in milliseconds) for how long the alert should be visible
+            }
+            // Call the hideAlert function when the page has finished loading
+            window.onload = hideAlert;
+        </script>
+
+
+        <h3 class="sug_records1">View your records 2023</h3>
+        {{your_table_html|safe}}
+    </div>
+    <h2 class="sug_records2">General summary of the savings</h2>
+    <div class="image_container">
+        <div><img style="width: 300px; margin-right: 20px;" src="data:image/png;base64,{{image1}}" alt=""></div>
+        <div><img style="width: 300px; margin-right: 20px;" src="data:image/png;base64,{{image2}}" alt=""></div>
+    </div>
+</body>
+
+</html>

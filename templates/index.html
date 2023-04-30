@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Login</title>
+</head>
+
+<body>
+    <div>
+        <img src="/static/cover.jpg" class="logo">
+    </div>
+    <div>
+        <h1 class="name">STAT UNITY GROUP INVESTMENT CLUB</h1>
+        <ul>
+            <li>About</li>
+            <li>Contact</li>
+        </ul>
+    </div>
+    {% with messages = get_flashed_messages() %} {% if messages %} {% for message in messages %}
+    <div id="alert" class="alert-danger">{{ message }}</div>
+    {% endfor %} {% endif %} {% endwith %}
+
+    <script type="text/javascript">
+        // Function to hide the alert message after a specified duration
+        function hideAlert() {
+            setTimeout(function() {
+                document.getElementById("alert").style.display = "none";
+            }, 5000); // Set the duration (in milliseconds) for how long the alert should be visible
+        }
+        // Call the hideAlert function when the page has finished loading
+        window.onload = hideAlert;
+    </script>
+    <div class="login">
+        <form action="{{url_for('login')}}" method="POST">
+            <label for="">Log me in</label>
+            <input autocomplete="off" name="fname" type="text" placeholder="first name">
+            <input autocomplete="off" name="sname" type="text" placeholder="surname">
+            <input class="submit" type="submit" value="Submit">
+        </form>
+    </div>
+</body>
+
+</html>

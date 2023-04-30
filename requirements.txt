@@ -1,0 +1,6 @@
+flask
+gunicorn
+secrets
+datetime
+pandas
+seaborn
