@@ -1,6 +1,6 @@
 flask
 gunicorn
-pyOpenSSL==20.0.1
+pip install pyopenssl
 secrets
 datetime
 pandas
