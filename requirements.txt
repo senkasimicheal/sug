@@ -4,4 +4,4 @@ secrets
 datetime
 pandas
 seaborn
-python-openssl
+ssl
