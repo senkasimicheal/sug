@@ -3,3 +3,4 @@ gunicorn
 datetime
 pandas
 seaborn
+requests
