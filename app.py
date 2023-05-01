@@ -19,6 +19,7 @@ def index():
 @app.route("/",methods=["GET","POST"])
 def login():
    sheet_id = '1Z1kzbz6kIebexfBU3EBSbh-xTQ2IPR7f'
+   f = 'xlsx'
    xls = f"https://docs.google.com/spreadsheets/d/{sheet_id}/export?format=xlsx"
    records = pd.read_excel(xls,'data', header=0)
    fname = request.form['fname']

@@ -1,6 +1,5 @@
 flask
 gunicorn
-SSL
 cryptography
 pyopenssl
 secrets
