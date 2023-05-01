@@ -4,6 +4,7 @@ import datetime
 import io
 import base64
 import pandas as pd
+import requests
 import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
@@ -19,9 +20,12 @@ def index():
 @app.route("/",methods=["GET","POST"])
 def login():
    sheet_id = '1Z1kzbz6kIebexfBU3EBSbh-xTQ2IPR7f'
-   f = 'xlsx'
-   xls = f"https://docs.google.com/spreadsheets/d/{sheet_id}/export?format=xlsx"
-   records = pd.read_excel(xls,'data', header=0)
+   xls_url = f"https://docs.google.com/spreadsheets/d/{sheet_id}/export?format=xlsx"
+
+   response = requests.get(xls_url)
+   with open('spreadsheet.xlsx', 'wb') as f:
+      f.write(response.content)
+   records = pd.read_excel('spreadsheet.xlsx')
    fname = request.form['fname']
    sname = request.form['sname']
    name = sname+' '+fname
@@ -41,9 +45,7 @@ def login():
 def profile():
    
    username = request.args.get('username')
-   sheet_id = '1Z1kzbz6kIebexfBU3EBSbh-xTQ2IPR7f'
-   xls = f"https://docs.google.com/spreadsheets/d/{sheet_id}/export?format=xlsx"
-   records = pd.read_excel(xls,'data', header=0)
+   records = pd.read_excel('spreadsheet.xlsx')
       
    your_record = records[(records.iloc[:, 0] == username) & (records.iloc[:, -1] != 0)]
    your_table_html = your_record.to_html(classes="table")
