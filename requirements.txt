@@ -4,3 +4,4 @@ datetime
 pandas
 seaborn
 requests
+openpyxl
