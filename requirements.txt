@@ -1,7 +1,6 @@
 flask
 gunicorn
-cryptography
-pyopenssl
+pyOpenSSL=0.13.1
 secrets
 datetime
 pandas
