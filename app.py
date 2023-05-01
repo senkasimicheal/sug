@@ -54,10 +54,10 @@ def profile():
    fig1, ax1 = plt.subplots()
    ax1 = sns.barplot(x=records.NAME, y=row_sums, data=records)
    plt.xticks(rotation=90)
-   xticks = range(len(records.iloc[:18,0]))
-   xticklabels = records.iloc[:-1, 0]
-   ax1.set_xticks(xticks)
-   ax1.set_xticklabels(xticklabels)
+   xticks1 = range(len(records.iloc[:18,0]))
+   xticklabels1 = records.iloc[:-1, 0]
+   ax1.set_xticks(xticks1)
+   ax1.set_xticklabels(xticklabels1)
    plt.title("Chart for member's saving contributions")
    plt.ylabel('Amount in UGX')
    plt.xlabel('Member')
@@ -72,10 +72,10 @@ def profile():
    fig2, ax2 = plt.subplots()
    ax2 = sns.barplot(x = col_sums.index, y=col_sums)
    plt.xticks(rotation=90)
-   xticks2 = range(len(records.iloc[0,:13]))
-   xticklabels2 = records.iloc[0, :-1]
-   ax1.set_xticks(xticks2)
-   ax1.set_xticklabels(xticklabels2)
+   xticks2 = range(len(records.columns[1:-1]))
+   xticklabels2 = records.columns[1:-1]
+   ax2.set_xticks(xticks2)
+   ax2.set_xticklabels(xticklabels2)
    plt.title("Chart for monthly savings")
    plt.ylabel('Amount in UGX')
    plt.xlabel('Month')
