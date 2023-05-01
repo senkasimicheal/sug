@@ -19,7 +19,7 @@ def index():
 
 @app.route("/",methods=["GET","POST"])
 def login():
-   sheet_id = '1Z1kzbz6kIebexfBU3EBSbh-xTQ2IPR7f'
+   sheet_id = '1GjX5JtXysgmX7eFSUZBJ3dv8whBcQmxYQuNI5Be448w'
    xls_url = f"https://docs.google.com/spreadsheets/d/{sheet_id}/export?format=xlsx"
 
    response = requests.get(xls_url)

@@ -36,12 +36,27 @@
     </script>
     <div class="login">
         <form action="{{url_for('login')}}" method="POST">
-            <label for="">Log me in</label>
-            <input autocomplete="off" name="fname" type="text" placeholder="first name">
-            <input autocomplete="off" name="sname" type="text" placeholder="surname">
+            <label>Log me in</label><br>
+            <input autocomplete="off" name="fname" type="text" placeholder="first name" onkeypress="return AvoidSpace(event);" onblur="this.value=removeSpaces(this.value);"><br>
+            <input autocomplete="off" name="sname" type="text" placeholder="surname" onkeypress="return AvoidSpace(event);" onblur="this.value=removeSpaces(this.value);"><br>
             <input class="submit" type="submit" value="Submit">
         </form>
     </div>
+
+    <script>
+        /* Not Allow Spcace Type in textbox */
+        function AvoidSpace(event) {
+            var k = event ? event.which : window.event.keyCode;
+            if (k == 32) return false;
+        }
+
+        /* Remove Blank Space Automatically Before, After & middle of String */
+
+        function removeSpaces(string) {
+            return string.split(' ').join('');
+        }
+    </script>
+
 </body>
 
 </html>

@@ -29,6 +29,10 @@ label {
     font-family: 'Times New Roman', Times, serif;
 }
 
+input {
+    margin-bottom: 5%;
+}
+
 .submit {
     background: green;
 }
