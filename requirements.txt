@@ -1,6 +1,6 @@
 flask
 gunicorn
-pyOpenSSL = "==19.1.0"
+OpenSSL.SSL
 secrets
 datetime
 pandas
