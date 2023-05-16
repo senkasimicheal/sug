@@ -107,8 +107,6 @@ def payment():
     sname = request.form.get('sname')
     month = request.form.get('month')
     amount = request.form.get('amount')
-    fname = fname.strip()
-    sname = sname.strip()
     f_name = fname.lower()
     s_name = sname.lower()
     
@@ -138,23 +136,15 @@ def download_csv():
                                         'march': 1, 'april': 1, 'may': 1, 'june': 1, 'july': 1, 'august': 1,
                                         'september': 1, 'october': 1, 'november': 1, 'december': 1})
     ordered_documents = []
-
-    # Iterate through the documents cursor
     for document in documents:
         ordered_document = {}
-        # Sort the keys of the document based on the desired order
         sorted_keys = sorted(document.keys(), key=lambda k: desired_order.index(k) if k in desired_order else float('inf'))
-        # Iterate through the sorted keys
         for key in sorted_keys:
             ordered_document[key] = document[key]
         ordered_documents.append(ordered_document)
     df = pd.DataFrame(ordered_documents)
     csv_data = df.to_csv(index=False)
-    
-     # Create a Flask response with the CSV data
     response = Response(csv_data, mimetype='text/csv')
-    
-    # Set the appropriate content-disposition header for the browser to download the file
     response.headers['Content-Disposition'] = 'attachment; filename=sug_financial_records.csv'
 
     return response
@@ -169,8 +159,6 @@ def register():
     sname = request.form.get('sname')
     password1 = request.form.get('password1')
     password2 = request.form.get('password2')
-    fname = fname.strip()
-    sname = sname.strip()
     f_name = fname.lower()
     s_name = sname.lower()
     

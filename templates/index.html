@@ -27,14 +27,19 @@
             }, 5000);
         }
         window.onload = hideAlert;
+
+        function convertToLowercase(inputId) {
+            var input = document.getElementById(inputId);
+            input.value = input.value.toLowerCase();
+        }
     </script>
 
     <div class="login">
         <div class="form-container">
             <button onclick="toggleForm1()">Log me in</button>
             <form action="{{url_for('login')}}" method="POST" id="myForm1" class="hidden1">
-                <input class="input-group" required autocomplete="off" name="fname" type="text" placeholder="first name">
-                <input class="input-group" required autocomplete="off" name="sname" type="text" placeholder="surname">
+                <input class="input-group" required autocomplete="off" name="fname" type="text" placeholder="first name" id="fname" oninput="convertToLowercase('fname')">
+                <input class="input-group" required autocomplete="off" name="sname" type="text" placeholder="surname" id="sname" oninput="convertToLowercase('sname')">
                 <input class="input-group" required type="password" name="password" placeholder="password">
                 <input class="input-group" class="submit" type="submit" value="Submit">
             </form>
@@ -45,8 +50,8 @@
         <div class="form-container">
             <button onclick="toggleForm2()">Login as an admin</button>
             <form action="{{url_for('record_payment_login')}}" method="POST" id="myForm2" class="hidden2">
-                <input class="input-group" required autocomplete="off" name="adminfname" type="text" placeholder="admin's first name" onkeypress="return event.charCode !== 32;">
-                <input class="input-group" required autocomplete="off" name="adminsname" type="text" placeholder="admin's surname" onkeypress="return event.charCode !== 32;">
+                <input class="input-group" required autocomplete="off" name="adminfname" type="text" placeholder="admin 's first name" id="adminfname" oninput="convertToLowercase('adminfname')">
+                <input class="input-group" required autocomplete="off" name="adminsname" type="text" placeholder="admin's surname" id="adminsname" oninput="convertToLowercase('adminsname')">
                 <input class="input-group" required type="password" name="adminpassword" placeholder="password">
                 <input class="input-group" class="submit" type="submit" value="Submit">
 

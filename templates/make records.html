@@ -32,13 +32,18 @@
             }, 5000);
         }
         window.onload = hideAlert;
+
+        function convertToLowercase(inputId) {
+            var input = document.getElementById(inputId);
+            input.value = input.value.toLowerCase();
+        }
     </script>
     <div class="login">
         <form action="{{url_for('payment')}}" method="POST">
             <label>Payee details</label><br>
-            <input class="input-group" required autocomplete="off" name="fname" type="text" placeholder="first name">
-            <input class="input-group" required autocomplete="off" name="sname" type="text" placeholder="surname">
-            <label for="">Month paid for</label><br>
+            <input class="input-group" required autocomplete="off" name="fname" type="text" placeholder="first name" id="fname" oninput="convertToLowercase('fname')">
+            <input class="input-group" required autocomplete="off" name="sname" type="text" placeholder="surname" id="sname" oninput="convertToLowercase('sname')">
+            <label for=" ">Month paid for</label><br>
             <select aria-placeholder="month paid for" style="margin-bottom: 5%;" name="month">
                 <option value="january">january</option>
                 <option value="february">february</option>
