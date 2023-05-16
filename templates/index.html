@@ -33,8 +33,8 @@
         <div class="form-container">
             <button onclick="toggleForm1()">Log me in</button>
             <form action="{{url_for('login')}}" method="POST" id="myForm1" class="hidden1">
-                <input class="input-group" required autocomplete="off" name="fname" type="text" placeholder="first name" onkeypress="return event.charCode !== 32;">
-                <input class="input-group" required autocomplete="off" name="sname" type="text" placeholder="surname" onkeypress="return event.charCode !== 32;">
+                <input class="input-group" required autocomplete="off" name="fname" type="text" placeholder="first name">
+                <input class="input-group" required autocomplete="off" name="sname" type="text" placeholder="surname">
                 <input class="input-group" required type="password" name="password" placeholder="password">
                 <input class="input-group" class="submit" type="submit" value="Submit">
             </form>

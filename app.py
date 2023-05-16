@@ -27,6 +27,8 @@ def login():
     fname = request.form.get('fname')
     sname = request.form.get('sname')
     entered_password = request.form.get('password')
+    fname = fname.strip()
+    sname = sname.strip()
     
     f_name = fname.lower()
     s_name = sname.lower()
@@ -73,6 +75,8 @@ def record_payment_login():
     sname = request.form.get('adminsname')
     entered_password = request.form.get('adminpassword')
     
+    fname = fname.strip()
+    sname = sname.strip()
     f_name = fname.lower()
     s_name = sname.lower()
     password = entered_password.encode('utf-8')
@@ -103,6 +107,8 @@ def payment():
     sname = request.form.get('sname')
     month = request.form.get('month')
     amount = request.form.get('amount')
+    fname = fname.strip()
+    sname = sname.strip()
     f_name = fname.lower()
     s_name = sname.lower()
     
@@ -163,6 +169,8 @@ def register():
     sname = request.form.get('sname')
     password1 = request.form.get('password1')
     password2 = request.form.get('password2')
+    fname = fname.strip()
+    sname = sname.strip()
     f_name = fname.lower()
     s_name = sname.lower()
     
