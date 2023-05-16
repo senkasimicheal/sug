@@ -1,7 +1,0 @@
-flask
-gunicorn
-datetime
-pandas
-seaborn
-requests
-openpyxl
