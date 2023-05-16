@@ -36,8 +36,8 @@
     <div class="login">
         <form action="{{url_for('payment')}}" method="POST">
             <label>Payee details</label><br>
-            <input required autocomplete="off" name="fname" type="text" placeholder="member's first name" onkeypress="return AvoidSpace(event);" onblur="this.value=removeSpaces(this.value);"><br>
-            <input required autocomplete="off" name="sname" type="text" placeholder="member's surname" onkeypress="return AvoidSpace(event);" onblur="this.value=removeSpaces(this.value);"><br>
+            <input class="input-group" required autocomplete="off" name="fname" type="text" placeholder="first name" onkeypress="return event.charCode !== 32;">
+            <input class="input-group" required autocomplete="off" name="sname" type="text" placeholder="surname" onkeypress="return event.charCode !== 32;">
             <label for="">Month paid for</label><br>
             <select aria-placeholder="month paid for" style="margin-bottom: 5%;" name="month">
                 <option value="january">january</option>
@@ -67,18 +67,6 @@
             }
         </script>
     </div>
-
-    <script>
-        function AvoidSpace(event) {
-            var k = event ? event.which : window.event.keyCode;
-            if (k == 32) return false;
-        }
-
-        function removeSpaces(string) {
-            return string.split(' ').join('');
-        }
-    </script>
-
 </body>
 
 </html>

@@ -32,8 +32,8 @@
     <div class="login">
         <h3>Fill in the details below</h3>
         <form action="{{url_for('register')}}" method="POST">
-            <input class="input-group" required autocomplete="off" name="fname" type="text" placeholder="first name" onkeypress="return AvoidSpace(event);" onblur="this.value=removeSpaces(this.value);">
-            <input class="input-group" required autocomplete="off" name="sname" type="text" placeholder="surname" onkeypress="return AvoidSpace(event);" onblur="this.value=removeSpaces(this.value);">
+            <input class="input-group" required autocomplete="off" name="fname" type="text" placeholder="first name" onkeypress="return event.charCode !== 32;">
+            <input class="input-group" required autocomplete="off" name="sname" type="text" placeholder="surname" onkeypress="return event.charCode !== 32;">
             <input required type="password" name="password1" placeholder="Create password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 6 or more characters"><br>
             <input required type="password" name="password2" placeholder="Confirm password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 6 or more characters">
             <input class="input-group submit" type="submit" value="Submit">
@@ -42,18 +42,6 @@
     </div>
 
     </div>
-
-    <script>
-        function AvoidSpace(event) {
-            var k = event ? event.which : window.event.keyCode;
-            if (k == 32) return false;
-        }
-
-        function removeSpaces(string) {
-            return string.split(' ').join('');
-        }
-    </script>
-
 </body>
 
 </html>

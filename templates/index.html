@@ -33,8 +33,8 @@
         <div class="form-container">
             <button onclick="toggleForm1()">Log me in</button>
             <form action="{{url_for('login')}}" method="POST" id="myForm1" class="hidden1">
-                <input class="input-group" required autocomplete="off" name="fname" type="text" placeholder="first name" onkeypress="return AvoidSpace(event);" onblur="this.value=removeSpaces(this.value);">
-                <input class="input-group" required autocomplete="off" name="sname" type="text" placeholder="surname" onkeypress="return AvoidSpace(event);" onblur="this.value=removeSpaces(this.value);">
+                <input class="input-group" required autocomplete="off" name="fname" type="text" placeholder="first name" onkeypress="return event.charCode !== 32;">
+                <input class="input-group" required autocomplete="off" name="sname" type="text" placeholder="surname" onkeypress="return event.charCode !== 32;">
                 <input class="input-group" required type="password" name="password" placeholder="password">
                 <input class="input-group" class="submit" type="submit" value="Submit">
             </form>
@@ -45,8 +45,8 @@
         <div class="form-container">
             <button onclick="toggleForm2()">Login as an admin</button>
             <form action="{{url_for('record_payment_login')}}" method="POST" id="myForm2" class="hidden2">
-                <input class="input-group" required autocomplete="off" name="adminfname" type="text" placeholder="admin's first name" onkeypress="return AvoidSpace(event);" onblur="this.value=removeSpaces(this.value);">
-                <input class="input-group" required autocomplete="off" name="adminsname" type="text" placeholder="admin's surname" onkeypress="return AvoidSpace(event);" onblur="this.value=removeSpaces(this.value);">
+                <input class="input-group" required autocomplete="off" name="adminfname" type="text" placeholder="admin's first name" onkeypress="return event.charCode !== 32;">
+                <input class="input-group" required autocomplete="off" name="adminsname" type="text" placeholder="admin's surname" onkeypress="return event.charCode !== 32;">
                 <input class="input-group" required type="password" name="adminpassword" placeholder="password">
                 <input class="input-group" class="submit" type="submit" value="Submit">
 
@@ -99,21 +99,7 @@
         }
         hideForm2();
     </script>
-
-
     </div>
-
-    <script>
-        function AvoidSpace(event) {
-            var k = event ? event.which : window.event.keyCode;
-            if (k == 32) return false;
-        }
-
-        function removeSpaces(string) {
-            return string.split(' ').join('');
-        }
-    </script>
-
 </body>
 
 </html>
