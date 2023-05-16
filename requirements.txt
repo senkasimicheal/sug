@@ -1,0 +1,7 @@
+flask
+pymongo
+bcrypt
+pandas
+numpy
+seaborn
+matplotlib
