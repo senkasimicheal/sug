@@ -52,7 +52,6 @@ def login():
                     ordered_document[key] = document[key]
                 ordered_documents.append(ordered_document)
             df = pd.DataFrame(ordered_documents)
-            df.to_csv('dataset.csv', index=False)
             df_filled = df.fillna(0)       
             your_record = df_filled[(df_filled.iloc[:, 0] == fname) & (df_filled.iloc[:, 1] == sname)]
             table_html = your_record.to_html(classes="table")

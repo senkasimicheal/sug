@@ -43,6 +43,12 @@ input {
     color: crimson;
 }
 
+.dont_have_account {
+    text-align: center;
+    justify-content: center;
+    display: flex;
+}
+
 .dont_have_account:hover {
     cursor: pointer;
     color: rgb(20, 220, 117);
