@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Records</title>
+</head>
+
+<body>
+    <div>
+        <nav>
+            <a class="logout" href="{{url_for('logout')}}">Logout</a>
+        </nav>
+    </div>
+    <h1 class="sug_records">SUG RECORDS</h1>
+    {% with messages = get_flashed_messages() %} {% if messages %} {% for message in messages %}
+    <div id="alert" class="alert-danger">{{ message }}</div>
+    {% endfor %} {% endif %} {% endwith %}
+    <div>
+
+        <h3 class="sug_records1">View your records 2023</h3>
+        {{table_html|safe}}
+    </div>
+</body>
+
+</html>

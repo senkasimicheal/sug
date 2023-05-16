@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Stat Unity Group</title>
+</head>
+
+<body onload="hideForm1()" onload="hideForm2()">
+    <div>
+        <img src="/static/cover.jpg" class="logo">
+    </div>
+    <div>
+        <h1 class="name">STAT UNITY GROUP INVESTMENT CLUB</h1>
+    </div>
+    {% with messages = get_flashed_messages() %} {% if messages %} {% for message in messages %}
+    <div id="alert" class="alert-danger">{{ message }}</div>
+    {% endfor %} {% endif %} {% endwith %}
+
+    <script type="text/javascript">
+        function hideAlert() {
+            setTimeout(function() {
+                document.getElementById("alert").style.display = "none";
+            }, 5000);
+        }
+        window.onload = hideAlert;
+    </script>
+
+    <div class="login">
+        <div class="form-container">
+            <button onclick="toggleForm1()">Log me in</button>
+            <form action="{{url_for('login')}}" method="POST" id="myForm1" class="hidden1">
+                <input class="input-group" required autocomplete="off" name="fname" type="text" placeholder="first name" onkeypress="return AvoidSpace(event);" onblur="this.value=removeSpaces(this.value);">
+                <input class="input-group" required autocomplete="off" name="sname" type="text" placeholder="surname" onkeypress="return AvoidSpace(event);" onblur="this.value=removeSpaces(this.value);">
+                <input class="input-group" required type="password" name="password" placeholder="password">
+                <input class="input-group" class="submit" type="submit" value="Submit">
+            </form>
+        </div>
+    </div>
+
+    <div class="login">
+        <div class="form-container">
+            <button onclick="toggleForm2()">Login as an admin</button>
+            <form action="{{url_for('record_payment_login')}}" method="POST" id="myForm2" class="hidden2">
+                <input class="input-group" required autocomplete="off" name="adminfname" type="text" placeholder="admin's first name" onkeypress="return AvoidSpace(event);" onblur="this.value=removeSpaces(this.value);">
+                <input class="input-group" required autocomplete="off" name="adminsname" type="text" placeholder="admin's surname" onkeypress="return AvoidSpace(event);" onblur="this.value=removeSpaces(this.value);">
+                <input class="input-group" required type="password" name="adminpassword" placeholder="password">
+                <input class="input-group" class="submit" type="submit" value="Submit">
+
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <label class="dont_have_account" onclick="registrationForm()">Register an account</label>
+
+        <script>
+            function registrationForm() {
+                window.location.href = "/registration";
+            }
+        </script>
+    </div>
+
+    <script>
+        function hideForm1() {
+            var form = document.getElementById("myForm1");
+            form.style.display = "none";
+        }
+
+        function toggleForm1() {
+            var form = document.getElementById("myForm1");
+            var form2 = document.getElementById("myForm2");
+            if (form.style.display === "none") {
+                form.style.display = "block";
+                form2.style.display = "none";
+            } else {
+                form.style.display = "none";
+            }
+        }
+        hideForm1();
+
+        function hideForm2() {
+            var form = document.getElementById("myForm2");
+            form.style.display = "none";
+        }
+
+        function toggleForm2() {
+            var form = document.getElementById("myForm2");
+            var form1 = document.getElementById("myForm1");
+            if (form.style.display === "none") {
+                form.style.display = "block";
+                form1.style.display = "none";
+            } else {
+                form.style.display = "none";
+            }
+        }
+        hideForm2();
+    </script>
+
+
+    </div>
+
+    <script>
+        function AvoidSpace(event) {
+            var k = event ? event.which : window.event.keyCode;
+            if (k == 32) return false;
+        }
+
+        function removeSpaces(string) {
+            return string.split(' ').join('');
+        }
+    </script>
+
+</body>
+
+</html>

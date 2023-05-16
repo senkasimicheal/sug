@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>record payments</title>
+</head>
+
+<body>
+    <div>
+        <img src="/static/cover.jpg" class="logo">
+    </div>
+    <div>
+        <h1 class="name">RECORD PAYMENT</h1>
+        <div>
+            <nav>
+                <a class="logout" href="{{url_for('logoutAdmin')}}">Logout</a>
+            </nav>
+        </div>
+    </div>
+    {% with messages = get_flashed_messages() %} {% if messages %} {% for message in messages %}
+    <div id="alert" class="alert-danger">{{ message }}</div>
+    {% endfor %} {% endif %} {% endwith %}
+
+    <script type="text/javascript">
+        function hideAlert() {
+            setTimeout(function() {
+                document.getElementById("alert").style.display = "none";
+            }, 5000);
+        }
+        window.onload = hideAlert;
+    </script>
+    <div class="login">
+        <form action="{{url_for('payment')}}" method="POST">
+            <label>Payee details</label><br>
+            <input required autocomplete="off" name="fname" type="text" placeholder="member's first name" onkeypress="return AvoidSpace(event);" onblur="this.value=removeSpaces(this.value);"><br>
+            <input required autocomplete="off" name="sname" type="text" placeholder="member's surname" onkeypress="return AvoidSpace(event);" onblur="this.value=removeSpaces(this.value);"><br>
+            <label for="">Month paid for</label><br>
+            <select aria-placeholder="month paid for" style="margin-bottom: 5%;" name="month">
+                <option value="january">january</option>
+                <option value="february">february</option>
+                <option value="march">march</option>
+                <option value="april">april</option>
+                <option value="may">may</option>
+                <option value="june">june</option>
+                <option value="july">july</option>
+                <option value="august">august</option>
+                <option value="september">september</option>
+                <option value="october">october</option>
+                <option value="november">november</option>
+                <option value="december">december</option>
+            </select><br>
+            <input placeholder="amount" type="number" min="0" max="30000" required><br>
+            <input class="submit" type="submit" value="Submit">
+        </form>
+    </div>
+
+    <div>
+        <button onclick="downloadCSV()">Download CSV</button>
+
+        <script>
+            function downloadCSV() {
+                window.location.href = "/download_csv";
+            }
+        </script>
+    </div>
+
+    <script>
+        function AvoidSpace(event) {
+            var k = event ? event.which : window.event.keyCode;
+            if (k == 32) return false;
+        }
+
+        function removeSpaces(string) {
+            return string.split(' ').join('');
+        }
+    </script>
+
+</body>
+
+</html>
