@@ -41,8 +41,8 @@
     <div class="login">
         <form action="{{url_for('payment')}}" method="POST">
             <label>Payee details</label><br>
-            <input class="input-group" required autocomplete="off" name="fname" type="text" placeholder="first name" id="fname" oninput="convertToLowercase('fname')">
-            <input class="input-group" required autocomplete="off" name="sname" type="text" placeholder="surname" id="sname" oninput="convertToLowercase('sname')">
+            <input class="input-group" required autocomplete="off" name="f_name" type="text" placeholder="first name" id="fname" oninput="convertToLowercase('fname')">
+            <input class="input-group" required autocomplete="off" name="s_name" type="text" placeholder="surname" id="sname" oninput="convertToLowercase('sname')">
             <label for=" ">Month paid for</label><br>
             <select aria-placeholder="month paid for" style="margin-bottom: 5%;" name="month">
                 <option value="january">january</option>
@@ -58,7 +58,7 @@
                 <option value="november">november</option>
                 <option value="december">december</option>
             </select><br>
-            <input placeholder="amount" type="number" min="0" max="30000" required><br>
+            <input placeholder="amount" name="amount" type="number" min="0" max="30000" required><br>
             <input class="submit" type="submit" value="Submit">
         </form>
     </div>

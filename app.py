@@ -24,14 +24,11 @@ def index():
 
 @app.route("/login", methods=["POST"])
 def login():
-    fname = request.form.get('fname')
-    sname = request.form.get('sname')
+    f_name = request.form.get('fname')
+    s_name = request.form.get('sname')
     entered_password = request.form.get('password')
-    fname = fname.strip()
-    sname = sname.strip()
-    
-    f_name = fname.lower()
-    s_name = sname.lower()
+    f_name = f_name.strip()
+    s_name = s_name.strip()
     
     password = entered_password.encode('utf-8')
     
@@ -55,7 +52,7 @@ def login():
                 ordered_documents.append(ordered_document)
             df = pd.DataFrame(ordered_documents)
             df_filled = df.fillna(0)       
-            your_record = df_filled[(df_filled.iloc[:, 0] == fname) & (df_filled.iloc[:, 1] == sname)]
+            your_record = df_filled[(df_filled.iloc[:, 0] == f_name) & (df_filled.iloc[:, 1] == s_name)]
             table_html = your_record.to_html(classes="table")
             session.permanent = False
             session['userID'] = userID
@@ -69,16 +66,13 @@ def logout():
     session.pop('userID', None)
     return redirect(url_for('index'))
 
-@app.route("/record_payment_login",methods=["POST"])
+@app.route("/record_payment_login",methods=["GET","POST"])
 def record_payment_login():
-    fname = request.form.get('adminfname')
-    sname = request.form.get('adminsname')
+    f_name = request.form.get('adminfname')
+    s_name = request.form.get('adminsname')
     entered_password = request.form.get('adminpassword')
-    
-    fname = fname.strip()
-    sname = sname.strip()
-    f_name = fname.lower()
-    s_name = sname.lower()
+    f_name = f_name.strip()
+    s_name = s_name.strip()
     password = entered_password.encode('utf-8')
     
     user = db.admins.find_one({'fname':f_name, 'sname':s_name})
@@ -91,7 +85,7 @@ def record_payment_login():
         if bcrypt.checkpw(password, stored_password):
             session.permanent = False
             session['userIDadmin'] = userIDadmin
-            return render_template("make records.html")
+            return redirect('/record_payment')
         else:
             flash('Wrong Password')
             return redirect('/')
@@ -102,32 +96,40 @@ def logoutAdmin():
     return redirect(url_for('index'))
 
 @app.route('/record_payment',methods=["GET","POST"])
+def get_payment_template():
+    print("Reached the /record_payment route")
+    if 'userIDadmin' in session:
+        return render_template("make records.html")
+    
+@app.route('/record_payment_template',methods=["POST"])
 def payment():
-    fname = request.form.get('fname')
-    sname = request.form.get('sname')
+    fname = request.form.get('f_name')
+    sname = request.form.get('s_name')
     month = request.form.get('month')
     amount = request.form.get('amount')
-    f_name = fname.lower()
-    s_name = sname.lower()
+    fname = fname.strip()
+    sname = sname.strip()
     
-    if amount > 30000:
-        flash('value should be lower or equal to 30000')
-        return redirect('/record_payment')
+    amount = int(amount)
     
     db.records.create_index([('fname', 1), ('sname', 1)], unique=True)
-    result = db.records.find_one({'fname': f_name, 'sname': s_name})
+    result = db.records.find_one({'fname': fname, 'sname': sname})
     if result:
-        if result[month] == 30000:
-            flash('Month already updated')
-            return redirect('/record_payment')
-        elif result[month] < 30000:
-            db.records.update_one({'fname': f_name, 'sname': s_name}, {'$set': {month: amount}})
+        month_amount = result.get(month, None)
+        if month_amount is not None:
+            if month_amount == 30000:
+                flash('Month already updated')
+                return redirect('/record_payment')
+            elif month_amount < 30000:
+                db.records.update_one({'fname': fname, 'sname': sname}, {'$set': {month: amount}})
+                flash('Record updated')
+                return redirect('/record_payment')
+        else:
+            db.records.update_one({'fname': fname, 'sname': sname}, {'$set': {month: amount}})
             flash('Record updated')
             return redirect('/record_payment')
     else:
-        user_record = {'fname': f_name, 'sname': s_name, month: amount}
-        db.records.update_one({'fname': f_name, 'sname': s_name}, {'$set': user_record}, upsert=True)
-        flash('Record created')
+        flash('Entered name is not in member documents')
         return redirect('/record_payment')
 
 @app.route("/download_csv", methods=["GET"])
@@ -155,12 +157,12 @@ def register_page():
     
 @app.route('/registration_page', methods=["GET","POST"])
 def register():
-    fname = request.form.get('fname')
-    sname = request.form.get('sname')
+    f_name = request.form.get('fname')
+    s_name = request.form.get('sname')
     password1 = request.form.get('password1')
     password2 = request.form.get('password2')
-    f_name = fname.lower()
-    s_name = sname.lower()
+    f_name = f_name.strip()
+    s_name = s_name.strip()
     
     if password1 != password2:
         flash('Passwords do not match')
@@ -175,7 +177,7 @@ def register():
             member_registered = db.users.find_one({'membership_id': club_member['_id']})
             if member_registered is None:
                 hashed_password = bcrypt.hashpw(password2.encode('utf-8'), bcrypt.gensalt())
-                user = {'membership_id': club_member['_id'],'fname': fname, 'sname': sname, 'password': hashed_password}
+                user = {'membership_id': club_member['_id'],'fname': f_name, 'sname': s_name, 'password': hashed_password}
                 db.users.insert_one(user)
                 flash('Member registered')
                 return redirect('/registration')
