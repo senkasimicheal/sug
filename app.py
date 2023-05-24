@@ -20,7 +20,22 @@ desired_order = ["_id", "fname", "sname", "january", "february", "march", "april
 
 @app.route("/", methods=["GET", "POST"])
 def index():
-   return render_template("index.html")
+    
+    if 'message' not in session:
+        session['message'] = 'There is an update on the website! you can now select your name from the list, try it now'  # Set the one-time message in the session
+
+    message = session.pop('message', None)  # Retrieve and remove the message from the session
+    
+    firstnames = db.users.find({}, {'fname': 1})
+    surnames = db.users.find({}, {'sname': 1})
+    fnames = [doc['fname'] for doc in firstnames]
+    snames = [doc['sname'] for doc in surnames]
+    
+    adminfirstnames = db.admins.find({}, {'fname': 1})
+    adminsurnames = db.admins.find({}, {'sname': 1})
+    adminfnames = [doc['fname'] for doc in adminfirstnames]
+    adminsnames = [doc['sname'] for doc in adminsurnames]
+    return render_template("index.html",fnames=fnames,snames=snames,adminfnames=adminfnames,adminsnames=adminsnames,message=message)
 
 @app.route("/login", methods=["POST"])
 def login():

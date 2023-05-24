@@ -83,6 +83,10 @@ input {
     margin-bottom: 10px;
 }
 
+.label {
+    margin-bottom: 3px;
+}
+
 .logout {
     text-decoration: none;
     font-weight: bold;
