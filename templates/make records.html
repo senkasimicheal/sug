@@ -41,8 +41,20 @@
     <div class="login">
         <form action="{{url_for('payment')}}" method="POST">
             <label>Payee details</label><br>
-            <input class="input-group" required autocomplete="off" name="f_name" type="text" placeholder="first name" id="fname" oninput="convertToLowercase('fname')">
-            <input class="input-group" required autocomplete="off" name="s_name" type="text" placeholder="surname" id="sname" oninput="convertToLowercase('sname')">
+            <label class="label" for="fname">Select payee`s first name</label><br>
+            <select class="label" name="f_name">
+                <option value="" selected disabled>Select name</option>
+                {%for fnames in fnames%}
+                    <option value="{{fnames}}">{{fnames}}</option>
+                {%endfor%}
+            </select><br>
+            <label class="label" for="sname">Select payee`s surname</label><br>
+            <select class="label" name="s_name">
+                <option value="" selected disabled>Select name</option>
+                {%for snames in snames%}
+                    <option value="{{snames}}">{{snames}}</option>
+                {%endfor%}
+            </select><br>
             <label for=" ">Month paid for</label><br>
             <select aria-placeholder="month paid for" style="margin-bottom: 5%;" name="month">
                 <option value="january">january</option>

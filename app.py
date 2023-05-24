@@ -19,13 +19,7 @@ db = client.SUG
 desired_order = ["_id", "fname", "sname", "january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"]
 
 @app.route("/", methods=["GET", "POST"])
-def index():
-    
-    if 'message' not in session:
-        session['message'] = 'There is an update on the website! you can now select your name from the list, try it now'  # Set the one-time message in the session
-
-    message = session.pop('message', None)  # Retrieve and remove the message from the session
-    
+def index():    
     firstnames = db.users.find({}, {'fname': 1})
     surnames = db.users.find({}, {'sname': 1})
     fnames = [doc['fname'] for doc in firstnames]
@@ -35,15 +29,13 @@ def index():
     adminsurnames = db.admins.find({}, {'sname': 1})
     adminfnames = [doc['fname'] for doc in adminfirstnames]
     adminsnames = [doc['sname'] for doc in adminsurnames]
-    return render_template("index.html",fnames=fnames,snames=snames,adminfnames=adminfnames,adminsnames=adminsnames,message=message)
+    return render_template("index.html",fnames=fnames,snames=snames,adminfnames=adminfnames,adminsnames=adminsnames)
 
 @app.route("/login", methods=["POST"])
 def login():
     f_name = request.form.get('fname')
     s_name = request.form.get('sname')
     entered_password = request.form.get('password')
-    f_name = f_name.strip()
-    s_name = s_name.strip()
     
     password = entered_password.encode('utf-8')
     
@@ -86,8 +78,6 @@ def record_payment_login():
     f_name = request.form.get('adminfname')
     s_name = request.form.get('adminsname')
     entered_password = request.form.get('adminpassword')
-    f_name = f_name.strip()
-    s_name = s_name.strip()
     password = entered_password.encode('utf-8')
     
     user = db.admins.find_one({'fname':f_name, 'sname':s_name})
@@ -112,9 +102,12 @@ def logoutAdmin():
 
 @app.route('/record_payment',methods=["GET","POST"])
 def get_payment_template():
-    print("Reached the /record_payment route")
     if 'userIDadmin' in session:
-        return render_template("make records.html")
+        firstnames = db.records.find({}, {'fname': 1})
+        surnames = db.records.find({}, {'sname': 1})
+        fnames = [doc['fname'] for doc in firstnames]
+        snames = [doc['sname'] for doc in surnames]
+        return render_template("make records.html",fnames=fnames,snames=snames)
     
 @app.route('/record_payment_template',methods=["POST"])
 def payment():
@@ -122,8 +115,6 @@ def payment():
     sname = request.form.get('s_name')
     month = request.form.get('month')
     amount = request.form.get('amount')
-    fname = fname.strip()
-    sname = sname.strip()
     
     amount = int(amount)
     
