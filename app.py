@@ -20,26 +20,22 @@ desired_order = ["_id", "fname", "sname", "january", "february", "march", "april
 
 @app.route("/", methods=["GET", "POST"])
 def index():    
-    firstnames = db.users.find({}, {'fname': 1})
-    surnames = db.users.find({}, {'sname': 1})
-    fnames = [doc['fname'] for doc in firstnames]
-    snames = [doc['sname'] for doc in surnames]
-    
     adminfirstnames = db.admins.find({}, {'fname': 1})
     adminsurnames = db.admins.find({}, {'sname': 1})
     adminfnames = [doc['fname'] for doc in adminfirstnames]
     adminsnames = [doc['sname'] for doc in adminsurnames]
-    return render_template("index.html",fnames=fnames,snames=snames,adminfnames=adminfnames,adminsnames=adminsnames)
+    return render_template("index.html",adminfnames=adminfnames,adminsnames=adminsnames)
 
 @app.route("/login", methods=["POST"])
 def login():
-    f_name = request.form.get('fname')
-    s_name = request.form.get('sname')
+    email = request.form.get('email')
     entered_password = request.form.get('password')
     
     password = entered_password.encode('utf-8')
     
-    user = db.users.find_one({'fname':f_name, 'sname':s_name})
+    user = db.users.find_one({'email':email})
+    f_name = user['fname']
+    s_name = user['sname']
     if user is None:
         flash('Wrong username')
         return redirect('/')
@@ -57,9 +53,20 @@ def login():
                 for key in sorted_keys:
                     ordered_document[key] = document[key]
                 ordered_documents.append(ordered_document)
-            df = pd.DataFrame(ordered_documents)
+            
+            capitalized_documents = []
+            for document in ordered_documents:
+                capitalized_document = {}
+                for key, value in document.items():
+                    if isinstance(value, str):
+                        capitalized_document[key.capitalize()] = value.capitalize()
+                    else:
+                        capitalized_document[key.capitalize()] = value
+                capitalized_documents.append(capitalized_document)
+
+            df = pd.DataFrame(capitalized_documents)
             df_filled = df.fillna(0)       
-            your_record = df_filled[(df_filled.iloc[:, 0] == f_name) & (df_filled.iloc[:, 1] == s_name)]
+            your_record = df_filled[(df_filled.iloc[:, 0] == f_name.capitalize()) & (df_filled.iloc[:, 1] == s_name.capitalize())]
             table_html = your_record.to_html(classes="table")
             session.permanent = False
             session['userID'] = userID
@@ -75,12 +82,11 @@ def logout():
 
 @app.route("/record_payment_login",methods=["GET","POST"])
 def record_payment_login():
-    f_name = request.form.get('adminfname')
-    s_name = request.form.get('adminsname')
+    adminemail = request.form.get('adminemail')
     entered_password = request.form.get('adminpassword')
     password = entered_password.encode('utf-8')
     
-    user = db.admins.find_one({'fname':f_name, 'sname':s_name})
+    user = db.admins.find_one({'email':adminemail})
     if user is None:
         flash('Wrong username')
         return redirect('/')
@@ -150,7 +156,18 @@ def download_csv():
         for key in sorted_keys:
             ordered_document[key] = document[key]
         ordered_documents.append(ordered_document)
-    df = pd.DataFrame(ordered_documents)
+    
+    capitalized_documents = []
+    for document in ordered_documents:
+        capitalized_document = {}
+        for key, value in document.items():
+            if isinstance(value, str):
+                capitalized_document[key.capitalize()] = value.capitalize()
+            else:
+                capitalized_document[key.capitalize()] = value
+        capitalized_documents.append(capitalized_document)
+                
+    df = pd.DataFrame(capitalized_documents)
     csv_data = df.to_csv(index=False)
     response = Response(csv_data, mimetype='text/csv')
     response.headers['Content-Disposition'] = 'attachment; filename=sug_financial_records.csv'
@@ -165,6 +182,7 @@ def register_page():
 def register():
     f_name = request.form.get('fname')
     s_name = request.form.get('sname')
+    email = request.form.get('email')
     password1 = request.form.get('password1')
     password2 = request.form.get('password2')
     f_name = f_name.strip()
@@ -183,7 +201,7 @@ def register():
             member_registered = db.users.find_one({'membership_id': club_member['_id']})
             if member_registered is None:
                 hashed_password = bcrypt.hashpw(password2.encode('utf-8'), bcrypt.gensalt())
-                user = {'membership_id': club_member['_id'],'fname': f_name, 'sname': s_name, 'password': hashed_password}
+                user = {'membership_id': club_member['_id'], 'email': email, 'fname': f_name, 'sname': s_name, 'password': hashed_password}
                 db.users.insert_one(user)
                 flash('Member registered')
                 return redirect('/registration')

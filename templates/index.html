@@ -38,20 +38,7 @@
         <div class="form-container">
             <button onclick="toggleForm1()">Log me in</button>
             <form action="{{url_for('login')}}" method="POST" id="myForm1" class="hidden1">
-                <label class="label" for="fname">Select your first name</label><br>
-                <select class="label" name="fname">
-                    <option value="" selected disabled>Select name</option>
-                    {%for fnames in fnames%}
-                        <option value="{{fnames}}">{{fnames}}</option>
-                    {%endfor%}
-                </select><br>
-                <label class="label" for="sname">Select your surname</label><br>
-                <select class="label" name="sname">
-                    <option value="" selected disabled>Select name</option>
-                    {%for snames in snames%}
-                        <option value="{{snames}}">{{snames}}</option>
-                    {%endfor%}
-                </select><br>
+                <input class="input-group" required autocomplete="off" type="email" name="email" placeholder="email/username">
                 <input class="input-group" required type="password" name="password" placeholder="password">
                 <input class="input-group" class="submit" type="submit" value="Submit">
             </form>
@@ -62,20 +49,7 @@
         <div class="form-container">
             <button onclick="toggleForm2()">Login as an admin</button>
             <form action="{{url_for('record_payment_login')}}" method="POST" id="myForm2" class="hidden2">
-                <label class="label" for="fname">Select your first name</label><br>
-                <select class="label" name="adminfname">
-                    <option value="" selected disabled>Select name</option>
-                    {%for adminfnames in adminfnames%}
-                        <option value="{{adminfnames}}">{{adminfnames}}</option>
-                    {%endfor%}
-                </select><br>
-                <label class="label" for="sname">Select your surname</label><br>
-                <select class="label" name="adminsname">
-                    <option value="" selected disabled>Select name</option>
-                    {%for adminsnames in adminsnames%}
-                        <option value="{{adminsnames}}">{{adminsnames}}</option>
-                    {%endfor%}
-                </select><br>
+                <input class="input-group" required autocomplete="off" type="email" name="adminemail" placeholder="email/username">
                 <input class="input-group" required type="password" name="adminpassword" placeholder="password">
                 <input class="input-group" class="submit" type="submit" value="Submit">
 
