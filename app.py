@@ -179,31 +179,36 @@ def register():
     f_name = request.form.get('fname')
     s_name = request.form.get('sname')
     email = request.form.get('email')
+    email1 = request.form.get('email1')
     password1 = request.form.get('password1')
     password2 = request.form.get('password2')
     f_name = f_name.strip()
     s_name = s_name.strip()
     
-    if password1 != password2:
-        flash('Passwords do not match')
+    if email != email1:
+        flash('Emails do not match')
         return redirect('/registration')
     else:
-        club_member = db.members.find_one({'fname':f_name, 'sname':s_name})
-    
-        if club_member is None:
-            flash('Not member of the club')
+        if password1 != password2:
+            flash('Passwords do not match')
             return redirect('/registration')
         else:
-            member_registered = db.users.find_one({'membership_id': club_member['_id']})
-            if member_registered is None:
-                hashed_password = bcrypt.hashpw(password2.encode('utf-8'), bcrypt.gensalt())
-                user = {'membership_id': club_member['_id'], 'email': email, 'fname': f_name, 'sname': s_name, 'password': hashed_password}
-                db.users.insert_one(user)
-                flash('Member registered')
+            club_member = db.members.find_one({'fname':f_name, 'sname':s_name})
+        
+            if club_member is None:
+                flash('Not member of the club')
                 return redirect('/registration')
             else:
-                flash('Member already registered')
-                return redirect('/registration')
+                member_registered = db.users.find_one({'membership_id': club_member['_id']})
+                if member_registered is None:
+                    hashed_password = bcrypt.hashpw(password2.encode('utf-8'), bcrypt.gensalt())
+                    user = {'membership_id': club_member['_id'], 'email': email, 'fname': f_name, 'sname': s_name, 'password': hashed_password}
+                    db.users.insert_one(user)
+                    flash('Member registered')
+                    return redirect('/registration')
+                else:
+                    flash('Member already registered')
+                    return redirect('/registration')
 
 if __name__ == '__main__':
     app.run()
