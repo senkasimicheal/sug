@@ -30,13 +30,13 @@ def login():
     password = entered_password.encode('utf-8')
     
     user = db.users.find_one({'email':email})
-    f_name = user['fname']
-    s_name = user['sname']
     if user is None:
         flash('Wrong username')
         return redirect('/')
     else:
         stored_password = user['password']
+        f_name = user['fname']
+        s_name = user['sname']
         userID = str(user['_id'])
         if bcrypt.checkpw(password, stored_password):
             documents = db.records.find({}, {'_id': 0, 'fname': 1, 'sname': 1, 'january': 1, 'february': 1,
