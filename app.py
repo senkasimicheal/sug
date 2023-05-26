@@ -19,12 +19,8 @@ db = client.SUG
 desired_order = ["_id", "fname", "sname", "january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"]
 
 @app.route("/", methods=["GET", "POST"])
-def index():    
-    adminfirstnames = db.admins.find({}, {'fname': 1})
-    adminsurnames = db.admins.find({}, {'sname': 1})
-    adminfnames = [doc['fname'] for doc in adminfirstnames]
-    adminsnames = [doc['sname'] for doc in adminsurnames]
-    return render_template("index.html",adminfnames=adminfnames,adminsnames=adminsnames)
+def index():
+    return render_template("index.html")
 
 @app.route("/login", methods=["POST"])
 def login():
