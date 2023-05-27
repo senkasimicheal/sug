@@ -38,7 +38,7 @@
 
             <div class="dd-content">
 
-                <li id="login">Member login</li>
+                <li style="margin-top: 7px;" id="login">Member login</li>
                 <li id="login1">admin login</li>
 
             </div>
@@ -76,9 +76,9 @@
 
         <form action="{{url_for('register')}}" method="POST">
             <h3>Register your account</h3>
-            <input class="box" required autocomplete="off" name="fname" type="text" placeholder="first name" id="fname" oninput="convertToLowercase('fname')">
-            <input class="box" required autocomplete="off" name="sname" type="text" placeholder="surname" id="sname" oninput="convertToLowercase('sname')">
-            <input class="box" required autocomplete="off" name="email" type="email" placeholder="email">
+            <input class="box" required name="fname" type="text" placeholder="first name" id="fname" oninput="convertToLowercase('fname')">
+            <input class="box" required name="sname" type="text" placeholder="surname" id="sname" oninput="convertToLowercase('sname')">
+            <input class="box" required name="email" type="email" placeholder="email">
             <input class="box" required autocomplete="off" name="email1" type="email" placeholder="confirm email">
             <input class="box" required type="password" name="password1" placeholder="Create password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 6 or more characters"><br>
             <input class="box" required type="password" name="password2" placeholder="Confirm password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 6 or more characters">
