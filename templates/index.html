@@ -2,107 +2,222 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-    <title>Stat Unity Group</title>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>sug investment club</title>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+
+    <link href="/favicon.ico" type="image/x-icon" rel="icon" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
 </head>
 
-<body onload="hideForm1()" onload="hideForm2()">
-    <div>
-        <img src="/static/cover.jpg" class="logo">
-    </div>
-    <div>
-        <h1 class="name">STAT UNITY GROUP INVESTMENT CLUB</h1>
-    </div>
-    {% with messages = get_flashed_messages() %} {% if messages %} {% for message in messages %}
-    <div id="alert" class="alert-danger">{{ message }}</div>
-    {% endfor %} {% endif %} {% endwith %}
+<body>
 
-    <script type="text/javascript">
-        function hideAlert() {
-            setTimeout(function() {
-                document.getElementById("alert").style.display = "none";
-            }, 5000);
-        }
-        window.onload = hideAlert;
+    <header>
 
-        function convertToLowercase(inputId) {
-            var input = document.getElementById(inputId);
-            input.value = input.value.toLowerCase();
-        }
-    </script>
-    <h4 style="font-style: italic; color: red; text-align: center; justify-content: center; font-weight: bold;">!!!New changes on the system, register yourself with an email address to be able to login!!!</h4>
-    <div class="login">
-        <div class="form-container">
-            <button onclick="toggleForm1()">Log me in</button>
-            <form action="{{url_for('login')}}" method="POST" id="myForm1" class="hidden1">
-                <input class="input-group" required autocomplete="off" type="email" name="email" placeholder="email/username">
-                <input class="input-group" required type="password" name="password" placeholder="password">
-                <input class="input-group" class="submit" type="submit" value="Submit">
-            </form>
+        <div id="menu" class="fas fa-bars"></div>
+
+        <i id="logo" class="fas fa-coins"></i>
+
+        <nav class="navbar">
+            <ul>
+                <li><a class="active" href="#home">home</a></li>
+                <li><a href="#contact">contact</a></li>
+            </ul>
+        </nav>
+
+        <div class="dd">
+
+            <li id="dd-btn">Login</li>
+
+            <div class="dd-content">
+
+                <li id="login">Member login</li>
+                <li id="login1">admin login</li>
+
+            </div>
+
         </div>
-    </div>
 
-    <div class="login">
-        <div class="form-container">
-            <button onclick="toggleForm2()">Login as an admin</button>
-            <form action="{{url_for('record_payment_login')}}" method="POST" id="myForm2" class="hidden2">
-                <input class="input-group" required autocomplete="off" type="email" name="adminemail" placeholder="email/username">
-                <input class="input-group" required type="password" name="adminpassword" placeholder="password">
-                <input class="input-group" class="submit" type="submit" value="Submit">
+        <div class="dd1">
 
-            </form>
+            <li id="dd-btn1">signup</li>
+
+            <div class="dd-content">
+
+                <li id="signup">Member signup</li>
+
+            </div>
+
         </div>
+
+    </header>
+
+    <div class="login-form">
+
+        <form action="{{url_for('login')}}" method="POST">
+            <h3>Member login</h3>
+            <input class="box" required autocomplete="off" type="email" name="email" placeholder="email/username">
+            <input class="box" required type="password" name="password" placeholder="password">
+            <input type="submit" class="btn" value="login">
+            <i class="fas fa-times"></i>
+        </form>
+
+
     </div>
 
-    <div>
-        <label class="dont_have_account" onclick="registrationForm()">Register an account</label>
+    <div class="signup-form">
 
-        <script>
-            function registrationForm() {
-                window.location.href = "/registration";
+        <form action="{{url_for('register')}}" method="POST">
+            <h3>Register your account</h3>
+            <input class="box" required autocomplete="off" name="fname" type="text" placeholder="first name" id="fname" oninput="convertToLowercase('fname')">
+            <input class="box" required autocomplete="off" name="sname" type="text" placeholder="surname" id="sname" oninput="convertToLowercase('sname')">
+            <input class="box" required autocomplete="off" name="email" type="email" placeholder="email">
+            <input class="box" required autocomplete="off" name="email1" type="email" placeholder="confirm email">
+            <input class="box" required type="password" name="password1" placeholder="Create password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 6 or more characters"><br>
+            <input class="box" required type="password" name="password2" placeholder="Confirm password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 6 or more characters">
+            <input required type="submit" class="btn" value="signup">
+            <i class="fas fa-times"></i>
+        </form>
+
+    </div>
+
+    <div class="login-form2">
+
+        <form action="{{url_for('record_payment_login')}}" method="POST">
+            <h3>Admin login</h3>
+            <input class="box" required autocomplete="off" type="email" name="adminemail" placeholder="email/username">
+            <input class="box" required type="password" name="adminpassword" placeholder="password">
+            <input type="submit" class="btn" value="login">
+            <i class="fas fa-times"></i>
+        </form>
+
+
+    </div>
+
+    <section class="home" id="home">
+        {% with messages = get_flashed_messages() %} {% if messages %} {% for message in messages %}
+        <div id="alert" class="alert-danger">{{ message }}</div>
+        {% endfor %} {% endif %} {% endwith %}
+
+        <script type="text/javascript">
+            function hideAlert() {
+                setTimeout(function() {
+                    document.getElementById("alert").style.display = "none";
+                }, 5000);
+            }
+            window.onload = hideAlert;
+
+            function convertToLowercase(inputId) {
+                var input = document.getElementById(inputId);
+                input.value = input.value.toLowerCase();
             }
         </script>
+        <h4 style="font-style: italic; color: #f39c12; text-align: center; justify-content: center; font-weight: bold; font-size: large;">!!!New changes on the system, register yourself with an email address to be able to login!!!</h4>
+        <h1 style="color: green; font-size: 40px;">STAT UNITY GROUP</h1>
+        <p class="getstarted">Click on Login/Signup in the top right corner to get started.</p>
+    </section>
+
+    <section class="contact" id="contact">
+
+        <h1 class="heading">contact us</h1>
+
+        <div class="row">
+
+            <form action="">
+                <input required type="text" placeholder="full name" class="box">
+                <input required type="email" placeholder="your email" class="box">
+                <input required type="password" placeholder="your password" class="box">
+                <textarea required name="" id="" cols="30" rows="10" class="box address" placeholder="your address"></textarea>
+                <input type="submit" class="btn" value="send now">
+            </form>
+
+            <div class="image">
+                <img src="contact.jpg" alt="">
+            </div>
+        </div>
+
+    </section>
+
+    <div class="footer">
+
+        <div class="box-container">
+
+            <div class="box">
+                <h3>quick links</h3>
+                <a href="#home">home</a>
+                <a href="#contact">contact</a>
+            </div>
+
+            <div class="box">
+                <h3>Contact info</h3>
+                <p><i class="fas fa-map-marker-alt"></i>kampala, uganda</p>
+                <p><i class="fas fa-envelope"></i> example@gmail.com </p>
+                <p><i class="fas fa-phone"></i> +256-772-726-380 </p>
+            </div>
+
+        </div>
+        <h1 class="credit">created by <a href="https://ug.linkedin.com/in/micheal-senkasi-846182233?trk=public_profile_browsemap">Senkasi Micheal</a> all rights reserved.</h1>
     </div>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
     <script>
-        function hideForm1() {
-            var form = document.getElementById("myForm1");
-            form.style.display = "none";
-        }
+        $(document).ready(function() {
+            $('#menu').click(function() {
+                $(this).toggleClass('fa-times');
+                $('.navbar').toggleClass('nav-toggle');
+            });
 
-        function toggleForm1() {
-            var form = document.getElementById("myForm1");
-            var form2 = document.getElementById("myForm2");
-            if (form.style.display === "none") {
-                form.style.display = "block";
-                form2.style.display = "none";
-            } else {
-                form.style.display = "none";
-            }
-        }
-        hideForm1();
+            $('#login').click(function() {
+                $('.login-form').addClass('popup');
+            });
 
-        function hideForm2() {
-            var form = document.getElementById("myForm2");
-            form.style.display = "none";
-        }
+            $('.login-form form .fa-times').click(function() {
+                $('.login-form').removeClass('popup');
+            });
 
-        function toggleForm2() {
-            var form = document.getElementById("myForm2");
-            var form1 = document.getElementById("myForm1");
-            if (form.style.display === "none") {
-                form.style.display = "block";
-                form1.style.display = "none";
-            } else {
-                form.style.display = "none";
-            }
-        }
-        hideForm2();
+            $('#signup').click(function() {
+                $('.login-form').removeClass('popup');
+                $('.signup-form').addClass('popup');
+            });
+
+            $('.signup-form form .fa-times').click(function() {
+                $('.signup-form').removeClass('popup');
+            });
+
+            $('#login1').click(function() {
+                $('.login-form2').addClass('popup');
+            });
+
+            $('.login-form2 form .fa-times').click(function() {
+                $('.login-form2').removeClass('popup');
+            });
+
+            $('#signup1').click(function() {
+                $('.login-form2').removeClass('popup');
+                $('.signup-form2').addClass('popup');
+            });
+
+            $(window).on('load scroll', function() {
+
+                $('#menu').removeClass('fa-times');
+                $('.navbar').removeClass('nav-toggle');
+
+                $('.login-form').removeClass('popup');
+
+                $('.signup-form').removeClass('popup');
+            });
+        });
     </script>
-    </div>
+
 </body>
 
 </html>
