@@ -105,6 +105,8 @@ def login():
             table_html = your_record.to_html(index=False)
             session.permanent = False
             session['userID'] = userID
+            session['f_name'] = f_name.capitalize()
+            session['s_name'] = s_name.capitalize()
             return render_template("your_record.html",table_html=table_html)
         else:
             flash('Wrong Password')
@@ -129,8 +131,12 @@ def record_payment_login():
         stored_password = user['password'].encode('utf-8')
         userIDadmin = str(user['_id'])
         if bcrypt.checkpw(password, stored_password):
+            fname = user['fname']
+            sname = user['sname']
             session.permanent = False
             session['userIDadmin'] = userIDadmin
+            session['fname'] = fname.capitalize()
+            session['sname'] = sname.capitalize()
             records = view_member_record()
             session['records'] = records
             return redirect('/record_payment')

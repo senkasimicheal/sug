@@ -19,7 +19,7 @@
             <a class="logout" href="{{url_for('logoutAdmin')}}">Logout</a>
             <button id="view-records-button" class="button-records">View records</button>
             <button class="button-records" onclick="downloadCSV()">Download records</button>
-            <p id="login-status">Logged in as {{session['name']}}</p>
+            <p id="login-status">Logged in as {{session['fname']}} {{session['sname']}}</p>
         </nav>
 
         {% with messages = get_flashed_messages() %} {% if messages %} {% for message in messages %}

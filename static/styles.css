@@ -199,3 +199,16 @@ input {
 .logout:hover {
     background-color: rgb(0, 85, 255);
 }
+
+#login-status {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #f0f2f4;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+    color: green;
+    font-style: italic;
+    font-weight: bold;
+    font-size: medium;
+    border: 1px solid black;
+}

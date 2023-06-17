@@ -10,15 +10,30 @@
 </head>
 
 <body>
-    <div>
+
+    <header>
+        <div class="logo">
+            <img src="/static/cover.jpg" alt="Logo">
+        </div>
         <nav>
             <a class="logout" href="{{url_for('logout')}}">Logout</a>
+            <p id="login-status">Logged in as {{session['f_name']}} {{session['s_name']}}</p>
         </nav>
-    </div>
+
+        {% with messages = get_flashed_messages() %} {% if messages %} {% for message in messages %}
+        <div id="alert" class="alert-danger">{{ message }}</div>
+        {% endfor %} {% endif %} {% endwith %}
+
+        <script type="text/javascript">
+            function hideAlert() {
+                setTimeout(function() {
+                    document.getElementById("alert").style.display = "none";
+                }, 6000);
+            }
+            window.onload = hideAlert;
+        </script>
+    </header>
     <h3 class="sug_records">SUG RECORDS</h3>
-    {% with messages = get_flashed_messages() %} {% if messages %} {% for message in messages %}
-    <div id="alert" class="alert-danger">{{ message }}</div>
-    {% endfor %} {% endif %} {% endwith %}
     <div class="table-section-records">
         <h3 class="sug_records1">View your records 2023</h3>
         {{table_html|safe}}
