@@ -10,34 +10,50 @@
 </head>
 
 <body>
-    <div>
-        <img src="/static/cover.jpg" class="logo">
-    </div>
-    <div>
-        <h1 class="name">RECORD PAYMENT</h1>
-        <div>
-            <nav>
-                <a class="logout" href="{{url_for('logoutAdmin')}}">Logout</a>
-            </nav>
+
+    <header>
+        <div class="logo">
+            <img src="/static/cover.jpg" alt="Logo">
+        </div>
+        <nav>
+            <a class="logout" href="{{url_for('logoutAdmin')}}">Logout</a>
+            <button id="view-records-button" class="button-records">View records</button>
+            <button class="button-records" onclick="downloadCSV()">Download records</button>
+            <p id="login-status">Logged in as {{session['name']}}</p>
+        </nav>
+
+        {% with messages = get_flashed_messages() %} {% if messages %} {% for message in messages %}
+        <div id="alert" class="alert-danger">{{ message }}</div>
+        {% endfor %} {% endif %} {% endwith %}
+
+        <script type="text/javascript">
+            function hideAlert() {
+                setTimeout(function() {
+                    document.getElementById("alert").style.display = "none";
+                }, 6000);
+            }
+            window.onload = hideAlert;
+        </script>
+    </header>
+
+    <div id="popup_records" class="popup-records">
+        <div class="popup-content-records">
+            <div class="table-section-records">
+                <div>
+                    <h3>Performance for {{name}}</h3>
+                    {% if 'records' in session %} {{ session['records']|safe }} {% else %}
+                    <p>No records available.</p>
+                    {% endif %}
+                </div>
+
+            </div>
         </div>
     </div>
-    {% with messages = get_flashed_messages() %} {% if messages %} {% for message in messages %}
-    <div id="alert" class="alert-danger">{{ message }}</div>
-    {% endfor %} {% endif %} {% endwith %}
 
-    <script type="text/javascript">
-        function hideAlert() {
-            setTimeout(function() {
-                document.getElementById("alert").style.display = "none";
-            }, 5000);
-        }
-        window.onload = hideAlert;
+    <div>
+        <h3 class="name">RECORD PAYMENT</h3>
+    </div>
 
-        function convertToLowercase(inputId) {
-            var input = document.getElementById(inputId);
-            input.value = input.value.toLowerCase();
-        }
-    </script>
     <div class="login">
         <form action="{{url_for('payment')}}" method="POST">
             <label style="text-decoration: underline; font-weight: bold; font-style: italic;">Payee details</label><br>
@@ -75,15 +91,39 @@
         </form>
     </div>
 
-    <div>
-        <button onclick="downloadCSV()">Download records</button>
-
-        <script>
-            function downloadCSV() {
-                window.location.href = "/download_csv";
+    <script>
+        let formVisible = false;
+        document.getElementById('view-records-button').addEventListener('click', function() {
+            if (formVisible) {
+                document.querySelector('.popup-records').style.display = 'none';
+                document.getElementById('view-records-button').textContent = 'View Records';
+                formVisible = false;
+            } else {
+                document.querySelector('.popup-records').style.display = 'block';
+                document.getElementById('view-records-button').textContent = 'Hide Records';
+                formVisible = true;
             }
-        </script>
-    </div>
+        });
+
+        function downloadCSV() {
+            window.location.href = "/download_csv";
+        }
+    </script>
+
+    <script type="text/javascript">
+        function hideAlert() {
+            setTimeout(function() {
+                document.getElementById("alert").style.display = "none";
+            }, 5000);
+        }
+        window.onload = hideAlert;
+
+        function convertToLowercase(inputId) {
+            var input = document.getElementById(inputId);
+            input.value = input.value.toLowerCase();
+        }
+    </script>
+
 </body>
 
 </html>

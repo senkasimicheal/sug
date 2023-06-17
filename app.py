@@ -99,9 +99,10 @@ def login():
                 capitalized_documents.append(capitalized_document)
 
             df = pd.DataFrame(capitalized_documents)
-            df_filled = df.fillna(0)       
+            df_filled = df.fillna(0) 
+            df_filled = df_filled.apply(pd.to_numeric, errors='ignore', downcast='integer')      
             your_record = df_filled[(df_filled.iloc[:, 0] == f_name.capitalize()) & (df_filled.iloc[:, 1] == s_name.capitalize())]
-            table_html = your_record.to_html(classes="table")
+            table_html = your_record.to_html(index=False)
             session.permanent = False
             session['userID'] = userID
             return render_template("your_record.html",table_html=table_html)
@@ -130,6 +131,8 @@ def record_payment_login():
         if bcrypt.checkpw(password, stored_password):
             session.permanent = False
             session['userIDadmin'] = userIDadmin
+            records = view_member_record()
+            session['records'] = records
             return redirect('/record_payment')
         else:
             flash('Wrong Password')
@@ -207,6 +210,38 @@ def download_csv():
     response.headers['Content-Disposition'] = 'attachment; filename=sug_financial_records.csv'
 
     return response
+
+def view_member_record():
+    documents = list(db.records.find({}, {'_id': 0, 'fname': 1, 'sname': 1, 'january': 1, 'february': 1,
+                                        'march': 1, 'april': 1, 'may': 1, 'june': 1, 'july': 1, 'august': 1,
+                                        'september': 1, 'october': 1, 'november': 1, 'december': 1}))
+    if len(documents) > 0:
+        ordered_documents = []
+        for document in documents:
+            ordered_document = {}
+            sorted_keys = sorted(document.keys(), key=lambda k: desired_order.index(k) if k in desired_order else float('inf'))
+            for key in sorted_keys:
+                ordered_document[key] = document[key]
+            ordered_documents.append(ordered_document)
+        
+        capitalized_documents = []
+        for document in ordered_documents:
+            capitalized_document = {}
+            for key, value in document.items():
+                if isinstance(value, str):
+                    capitalized_document[key.capitalize()] = value.capitalize()
+                else:
+                    capitalized_document[key.capitalize()] = value
+            capitalized_documents.append(capitalized_document)
+                    
+        df = pd.DataFrame(capitalized_documents)
+        df = df.fillna(0)
+        df = df.apply(pd.to_numeric, errors='ignore', downcast='integer')
+        records = df.to_html(index=False)
+
+        return records
+    else:
+        return None
 
 if __name__ == '__main__':
     app.run()

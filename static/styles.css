@@ -18,6 +18,10 @@
     display: flex;
 }
 
+.logo img {
+    height: 50px;
+}
+
 .alert-danger {
     color: red;
     font-weight: bold;
@@ -87,11 +91,6 @@ input {
     margin-bottom: 3px;
 }
 
-.logout {
-    text-decoration: none;
-    font-weight: bold;
-}
-
 .sug_records {
     color: green;
     text-align: center;
@@ -131,7 +130,72 @@ input {
     display: none;
 }
 
-.logout {
+.popup-records {
+    top: 50%;
+    left: 50%;
+    background-color: rgba(255, 255, 255, 0.8);
+    display: none;
+}
+
+.popup-content-records {
+    background-color: #f5f5f5;
+    border-radius: 5px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+}
+
+.table-section-records {
+    flex: 1;
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 10px;
+    max-height: 600px;
+    /* Set a maximum height for the table section */
+    overflow: auto;
+    /* Enable vertical scrolling */
+}
+
+.table-section-records table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-section-records th,
+.table-section-records td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.table-section-records td.right-align {
+    text-align: right;
+}
+
+.button-records {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #337ab7;
+    color: #fff;
     text-decoration: none;
-    font-weight: bold;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.button-records:hover {
+    background-color: #286090;
+}
+
+.logout {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: red;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.logout:hover {
+    background-color: rgb(0, 85, 255);
 }
